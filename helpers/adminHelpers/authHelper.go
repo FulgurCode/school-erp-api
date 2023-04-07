@@ -18,3 +18,12 @@ func LoginWithSesssion(c *gin.Context, admin map[string]interface{}) {
 	var err = session.Save()
 	helpers.CheckNilErr(err)
 }
+
+// Check if admin logged in
+func CheckLogin(c *gin.Context) bool {
+	var session = sessions.DefaultMany(c, "admin")
+	if session.Get("isLoggedIn") == true {
+		return true
+	}
+	return false
+}
