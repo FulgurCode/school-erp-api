@@ -12,4 +12,6 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.POST("/login", controller.AdminLoginRoute)
 	// checklogin route
 	router.GET("/checklogin", controller.AdminCheckLoginRoute)
+	// logout route
+	router.GET("/logout", controller.AdminLogoutRoute)
 }

@@ -42,3 +42,11 @@ func AdminCheckLoginRoute(c *gin.Context) {
 		c.JSON(401, false)
 	}
 }
+
+// GET request on '/api/admin/logout'
+func AdminLogoutRoute(c *gin.Context) {
+	// clearing 'admin' session
+	adminHelpers.Logout(c)
+	// Response for the request
+	c.JSON(200, "Loggged Out")
+}
