@@ -27,3 +27,12 @@ func CheckLogin(c *gin.Context) bool {
 	}
 	return false
 }
+
+// Logging out as admin using session
+func Logout(c *gin.Context) {
+	// clearing admin session
+	var session = sessions.DefaultMany(c, "admin")
+	session.Options(sessions.Options{MaxAge: -1})
+	session.Clear()
+	session.Save()
+}
