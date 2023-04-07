@@ -31,3 +31,14 @@ func AdminLoginRoute(c *gin.Context) {
 	adminHelpers.LoginWithSesssion(c, admin)
 	c.JSON(200, "Login Successful")
 }
+
+// GET request on '/api/admin/checklogin'
+func AdminCheckLoginRoute(c *gin.Context) {
+	// checking if logged in as admin and sending response
+	var isLoggedIn = adminHelpers.CheckLogin(c)
+	if isLoggedIn == true {
+		c.JSON(200, true)
+	} else {
+		c.JSON(401, false)
+	}
+}
