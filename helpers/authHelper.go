@@ -11,3 +11,13 @@ func ComparePassword(hashedPassword string, password string) bool {
 		return true
 	}
 }
+
+// Hashing password using bcrypt
+func HashPassword(password string) string {
+	// Generating hashed password
+	var hashedPassword, err = bcrypt.GenerateFromPassword([]byte(password), 14)
+	if err != nil {
+		panic(err)
+	}
+	return string(hashedPassword)
+}
