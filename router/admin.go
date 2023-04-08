@@ -14,4 +14,6 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/checklogin", controller.AdminCheckLoginRoute)
 	// logout route
 	router.GET("/logout", controller.AdminLogoutRoute)
+	// change-password route
+	router.PUT("/change-password", controller.ChangeAdminPassword)
 }

@@ -2,6 +2,7 @@ package adminHelpers
 
 import (
 	"github.com/FulgurCode/school-erp-api/helpers"
+	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -35,4 +36,13 @@ func Logout(c *gin.Context) {
 	session.Options(sessions.Options{MaxAge: -1})
 	session.Clear()
 	session.Save()
+}
+
+// Update admin password
+func ChangePassword(admin map[string]interface{}) error {
+	// Hashed new password
+	var hashedPassword = helpers.HashPassword(admin["password"].(string))
+	// Updating password and returning error
+	var err = databaseHelpers.UpdateAdminPassword(admin["id"].(primitive.ObjectID), hashedPassword)
+	return err
 }

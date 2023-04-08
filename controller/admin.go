@@ -50,3 +50,22 @@ func AdminLogoutRoute(c *gin.Context) {
 	// Response for the request
 	c.JSON(200, "Loggged Out")
 }
+
+// PUT request on '/api/admin/change-password'
+func ChangeAdminPassword(c *gin.Context) {
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Changing admin password and sending response
+	data["id"] = adminHelpers.GetId(c)
+	var err = adminHelpers.ChangePassword(data)
+	if err != nil {
+		c.JSON(500, err)
+		return
+	}
+	c.JSON(200, "Password Changed")
+}
