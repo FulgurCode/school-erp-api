@@ -4,7 +4,7 @@ This is school-erp api written in GO.
 
 ## Usage
 
-1. Install and setup [Go]([Download and install - The Go Programming Language](https://go.dev/doc/install)) and [Mongodb](https://www.mongodb.com/docs/manual/installation/)
+1. Install and setup [Go](https://go.dev/doc/install) and [Mongodb](https://www.mongodb.com/docs/manual/installation/)
 
 2. Clone this repository and swwitch directory
    
