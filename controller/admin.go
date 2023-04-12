@@ -64,8 +64,26 @@ func ChangeAdminPassword(c *gin.Context) {
 	data["id"] = adminHelpers.GetId(c)
 	var err = adminHelpers.ChangePassword(data)
 	if err != nil {
-		c.JSON(500, err)
+		c.JSON(500, "Request failed")
 		return
 	}
 	c.JSON(200, "Password Changed")
+}
+
+// POST request on '/api/admin/new-admission'
+func NewAdmissionRoute(c *gin.Context) {
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Add student to database and send response
+	var err = adminHelpers.AddNewAdmission(data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Successfully added")
 }
