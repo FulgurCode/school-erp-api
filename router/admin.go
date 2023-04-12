@@ -7,7 +7,6 @@ import (
 
 func AdminRouter(router *gin.RouterGroup) {
 	// Authentication
-
 	// login route
 	router.POST("/login", controller.AdminLoginRoute)
 	// checklogin route
@@ -16,4 +15,8 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/logout", controller.AdminLogoutRoute)
 	// change-password route
 	router.PUT("/change-password", controller.ChangeAdminPassword)
+
+	// Admission
+	// new-admission route
+	router.POST("/new-admission", controller.NewAdmissionRoute)
 }
