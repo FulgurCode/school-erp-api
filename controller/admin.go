@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/adminHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
@@ -86,4 +88,22 @@ func NewAdmissionRoute(c *gin.Context) {
 		return
 	}
 	c.JSON(200, "Successfully added")
+}
+
+// GET request on '/api/admin/get-student'
+func GetStudentRoute(c *gin.Context) {
+	// Getting admission number
+	var admissionNo, _ = strconv.Atoi(c.Query("admissionNo"))
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Getting student and sending response
+	var student, err = databaseHelpers.GetStudentByAdmissionNo(admissionNo)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, student)
 }
