@@ -2,55 +2,9 @@
 
 This is school-erp api written in GO.
 
-## Usage
+## How to use
 
-1. Install and setup [Go](https://go.dev/doc/install) and [Mongodb](https://www.mongodb.com/docs/manual/installation/)
-
-2. Clone this repository and change directory
-   
-   ```shell
-   git clone https://github.com/FulgurCode/school-erp-api
-   cd school-erp-api
-   ```
-
-3. Create `.env` file
-   
-   ```shell
-   touch .env
-   ```
-
-4. Store thease values in `.env`
-   
-   * `PORT`
-     Port that server listen for requests
-   
-   * `SECRET_KEY`
-     Secret key for cookie
-   
-   * `MONGODB_URI`
-     Uri of mongodb database
-   
-   **Example**
-   
-   ```env
-   PORT=9000
-   SECRET_KEY=secret_key
-   MONGODB_URI=mongodb://localhost:27017
-   ```
-
-5. Install go dependencies
-   
-   ```shell
-   go mod tidy
-   ```
-
-6. Build and run executable file
-   
-   ```shell
-   go build .
-   ```
-   
-   Now run the executable for your OS
+Check out [Wiki](https://github.com/FulgurCode/school-erp-api/wiki) for setup instructions and documentation.
 
 ## Contributing
 
