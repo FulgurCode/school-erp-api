@@ -8,7 +8,6 @@ import (
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/router"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 )
 
 func main() {
@@ -22,16 +21,9 @@ func main() {
 	var router = router.Router()
 	router.Run()
 
-	// cors setup
-	var c = cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:5173"},
-		AllowCredentials: true,
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
-	})
-
 	// Listen to requests in 'port'
 	var port = os.Getenv("PORT")
-	var err = http.ListenAndServe(":"+port, c.Handler(router))
+	var err = http.ListenAndServe(":"+port, router)
 	helpers.CheckNilErr(err)
 
 	// Disconnecting from Database
