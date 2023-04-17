@@ -19,7 +19,6 @@ func main() {
 
 	// Setting up gin router
 	var router = router.Router()
-	router.Run()
 
 	// Listen to requests in 'port'
 	var port = os.Getenv("PORT")
