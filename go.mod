@@ -6,7 +6,6 @@ require (
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-gonic/gin v1.9.0
 	github.com/joho/godotenv v1.5.1
-	github.com/rs/cors v1.8.3
 	go.mongodb.org/mongo-driver v1.11.3
 	golang.org/x/crypto v0.7.0
 )
