@@ -38,11 +38,7 @@ func AdminLoginRoute(c *gin.Context) {
 func AdminCheckLoginRoute(c *gin.Context) {
 	// checking if logged in as admin and sending response
 	var isLoggedIn = adminHelpers.CheckLogin(c)
-	if isLoggedIn == true {
-		c.JSON(200, true)
-	} else {
-		c.JSON(401, false)
-	}
+	c.JSON(200, isLoggedIn)
 }
 
 // GET request on '/api/admin/logout'
