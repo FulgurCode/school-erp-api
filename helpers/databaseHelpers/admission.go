@@ -29,7 +29,18 @@ func GetLastAdmissionNumber() int32 {
 
 // Inserting student to database
 func InsertStudent(student map[string]interface{}) error {
+	// database
 	var db = connections.Db
+	// inserting students
 	var _, err = db.Collection("students").InsertOne(context.Background(), student)
+	return err
+}
+
+// Importing multiple students to database
+func ImportStudents(students []interface{}) error {
+	// database
+	var db = connections.Db
+	// Importing students
+	var _, err = db.Collection("students").InsertMany(context.Background(), students)
 	return err
 }
