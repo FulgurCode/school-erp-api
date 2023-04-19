@@ -77,7 +77,7 @@ func NewAdmissionRoute(c *gin.Context) {
 		c.JSON(401, "Not Logged In")
 		return
 	}
-	// Add student to database and send response
+	// Adding student to database and sending response
 	var err = adminHelpers.AddNewAdmission(data)
 	if err != nil {
 		c.JSON(500, "Request failed")
@@ -102,4 +102,19 @@ func GetStudentRoute(c *gin.Context) {
 		return
 	}
 	c.JSON(200, student)
+}
+
+// POST request on '/api/admin/import-students'
+func ImportStudents(c *gin.Context) {
+	// Getting uploaded data file
+	var file, err = c.FormFile("file")
+	helpers.CheckNilErr(err)
+	var students = helpers.CsvToMap(file)
+	// importing students to database sending response
+	err = databaseHelpers.ImportStudents(students)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Successfully added")
 }
