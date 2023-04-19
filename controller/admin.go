@@ -51,13 +51,13 @@ func AdminLogoutRoute(c *gin.Context) {
 
 // PUT request on '/api/admin/change-password'
 func ChangeAdminPassword(c *gin.Context) {
-	// Getting request body
-	var data = helpers.GetRequestBody(c)
 	// Checking if logged in
 	if !adminHelpers.CheckLogin(c) {
 		c.JSON(401, "Not Logged In")
 		return
 	}
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
 	// Changing admin password and sending response
 	data["id"] = adminHelpers.GetId(c)
 	var err = adminHelpers.ChangePassword(data)
@@ -70,13 +70,13 @@ func ChangeAdminPassword(c *gin.Context) {
 
 // POST request on '/api/admin/new-admission'
 func NewAdmissionRoute(c *gin.Context) {
-	// Getting request body
-	var data = helpers.GetRequestBody(c)
 	// Checking if logged in
 	if !adminHelpers.CheckLogin(c) {
 		c.JSON(401, "Not Logged In")
 		return
 	}
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
 	// Adding student to database and sending response
 	var err = adminHelpers.AddNewAdmission(data)
 	if err != nil {
@@ -88,13 +88,13 @@ func NewAdmissionRoute(c *gin.Context) {
 
 // GET request on '/api/admin/get-student'
 func GetStudentRoute(c *gin.Context) {
-	// Getting admission number
-	var admissionNo, _ = strconv.Atoi(c.Query("admissionNo"))
 	// Checking if logged in
 	if !adminHelpers.CheckLogin(c) {
 		c.JSON(401, "Not Logged In")
 		return
 	}
+	// Getting admission number
+	var admissionNo, _ = strconv.Atoi(c.Query("admissionNo"))
 	// Getting student and sending response
 	var student, err = databaseHelpers.GetStudentByAdmissionNo(admissionNo)
 	if err != nil {
@@ -106,6 +106,11 @@ func GetStudentRoute(c *gin.Context) {
 
 // POST request on '/api/admin/import-students'
 func ImportStudents(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
 	// Getting uploaded data file
 	var file, err = c.FormFile("file")
 	helpers.CheckNilErr(err)
