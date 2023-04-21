@@ -1,8 +1,6 @@
 package adminHelpers
 
 import (
-	"strconv"
-
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
 )
 
@@ -11,24 +9,21 @@ func GetStudents(search string, value string) ([]map[string]interface{}, error) 
 	switch search {
 	case "admissionNo":
 		// Getting student by admission number
-		var admissionNo, _ = strconv.Atoi(value)
-		var students, err = databaseHelpers.GetStudentByAdmissionNo(admissionNo)
+		var students, err = databaseHelpers.GetStudentByAdmissionNo(value)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
 		return students, err
 	case "applicationNo":
 		// Getting student by application number
-		var applicationNo, _ = strconv.Atoi(value)
-		var students, err = databaseHelpers.GetStudentByApplicationNo(applicationNo)
+		var students, err = databaseHelpers.GetStudentByApplicationNo(value)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
 		return students, err
 	case "name":
 		// Getting student by name
-		var name = value
-		var students, err = databaseHelpers.GetStudentByName(name)
+		var students, err = databaseHelpers.GetStudentByName(value)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
