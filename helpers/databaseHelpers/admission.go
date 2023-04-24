@@ -24,7 +24,11 @@ func GetLastAdmissionNumber() int32 {
 		}
 		helpers.CheckNilErr(err)
 	}
-	return student["admissionNo"].(int32)
+	var admissionNo, exists = student["admissionNo"].(int32)
+	if exists == false {
+		admissionNo = 0
+	}
+	return admissionNo
 }
 
 // Inserting student to database

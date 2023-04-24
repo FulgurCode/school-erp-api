@@ -4,6 +4,7 @@ import (
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/adminHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
+	"github.com/FulgurCode/school-erp-api/helpers/studentHelpers"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -113,7 +114,7 @@ func ImportStudents(c *gin.Context) {
 	// Getting uploaded data file
 	var file, err = c.FormFile("file")
 	helpers.CheckNilErr(err)
-	var students = helpers.CsvToMap(file)
+	var students = studentHelpers.ImportStudentsFromCSV(file)
 	// importing students to database sending response
 	err = databaseHelpers.ImportStudents(students)
 	if err != nil {
