@@ -6,6 +6,7 @@ import (
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/studentHelpers"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -122,4 +123,24 @@ func ImportStudents(c *gin.Context) {
 		return
 	}
 	c.JSON(200, "Successfully added")
+}
+
+// PUT request on '/api/admin/edit-student'
+func EditStudents(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Getting object id of student
+	var studentId, err = primitive.ObjectIDFromHex(c.Query("studentId"))
+	helpers.CheckNilErr(err)
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	err = adminHelpers.EditStudent(studentId, data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Updated Successfully")
 }
