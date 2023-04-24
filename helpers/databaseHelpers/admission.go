@@ -6,6 +6,7 @@ import (
 	"github.com/FulgurCode/school-erp-api/connections"
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -46,5 +47,16 @@ func ImportStudents(students []interface{}) error {
 	var db = connections.Db
 	// Importing students
 	var _, err = db.Collection("students").InsertMany(context.Background(), students)
+	return err
+}
+
+// Update student details using object id
+func UpdateStudent(admissionId primitive.ObjectID, student map[string]interface{}) error {
+	// database
+	var db = connections.Db
+
+	// Updating student details based on student id
+	var _, err = db.Collection("students").UpdateOne(context.Background(), bson.M{"_id": admissionId}, bson.M{"$set": student})
+	helpers.CheckNilErr(err)
 	return err
 }

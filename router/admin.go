@@ -21,6 +21,8 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.POST("/new-admission", controller.NewAdmissionRoute)
 	// import-students route
 	router.POST("/import-students", controller.ImportStudents)
+	// edit-student route
+	router.PUT("/edit-student", controller.EditStudents)
 
 	// Student
 	// get-student route
