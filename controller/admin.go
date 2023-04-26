@@ -78,12 +78,12 @@ func NewAdmissionRoute(c *gin.Context) {
 	// Getting request body
 	var data = helpers.GetRequestBody(c)
 	// Adding student to database and sending response
-	var err = adminHelpers.AddNewAdmission(data)
+	var id, err = adminHelpers.AddNewAdmission(data)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
 	}
-	c.JSON(200, "Successfully added")
+	c.JSON(200, id)
 }
 
 // GET request on '/api/admin/get-students'
