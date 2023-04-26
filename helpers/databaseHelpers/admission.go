@@ -33,12 +33,13 @@ func GetLastAdmissionNumber() int32 {
 }
 
 // Inserting student to database
-func InsertStudent(student map[string]interface{}) error {
+func InsertStudent(student map[string]interface{}) (string, error) {
 	// database
 	var db = connections.Db
 	// inserting students
-	var _, err = db.Collection("students").InsertOne(context.Background(), student)
-	return err
+	var result, err = db.Collection("students").InsertOne(context.Background(), student)
+	var id = result.InsertedID.(primitive.ObjectID).Hex()
+	return id, err
 }
 
 // Importing multiple students to database
