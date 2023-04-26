@@ -8,7 +8,7 @@ import (
 )
 
 // Getting students using admission number
-func GetStudentByAdmissionNo(admissionNo string) ([]map[string]interface{}, error) {
+func GetStudentByAdmissionNo(admissionNo int) ([]map[string]interface{}, error) {
 	// database
 	var db = connections.Db
 
@@ -24,7 +24,7 @@ func GetStudentByAdmissionNo(admissionNo string) ([]map[string]interface{}, erro
 }
 
 // Getting students using admission number
-func GetStudentByApplicationNo(applicationNo string) ([]map[string]interface{}, error) {
+func GetStudentByApplicationNo(applicationNo int) ([]map[string]interface{}, error) {
 	// database
 	var db = connections.Db
 

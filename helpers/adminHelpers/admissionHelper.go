@@ -1,7 +1,6 @@
 package adminHelpers
 
 import (
-	"strconv"
 	"sync"
 
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
@@ -32,7 +31,7 @@ func EditStudent(studentId primitive.ObjectID, student map[string]interface{}) e
 	if _, exists := student["admissionNo"]; !exists && student["status"] == "permanent" {
 		// waiting for request to finish
 		var admissionNo = databaseHelpers.GetLastAdmissionNumber()
-		student["admissionNo"] = strconv.Itoa(int(admissionNo) + 1)
+		student["admissionNo"] = admissionNo + 1
 	}
 	// Update student details
 	var err = databaseHelpers.UpdateStudent(studentId, student)

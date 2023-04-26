@@ -22,7 +22,7 @@ func AdminRouter(router *gin.RouterGroup) {
 	// import-students route
 	router.POST("/import-students", controller.ImportStudents)
 	// edit-student route
-	router.PUT("/edit-student", controller.EditStudents)
+	router.PUT("/edit-student", controller.EditStudent)
 
 	// Student
 	// get-student route

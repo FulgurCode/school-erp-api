@@ -126,7 +126,7 @@ func ImportStudents(c *gin.Context) {
 }
 
 // PUT request on '/api/admin/edit-student'
-func EditStudents(c *gin.Context) {
+func EditStudent(c *gin.Context) {
 	// Checking if logged in
 	if !adminHelpers.CheckLogin(c) {
 		c.JSON(401, "Not Logged In")

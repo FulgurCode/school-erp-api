@@ -3,6 +3,7 @@ package studentHelpers
 import (
 	"encoding/csv"
 	"mime/multipart"
+	"strconv"
 
 	"github.com/FulgurCode/school-erp-api/helpers"
 )
@@ -29,7 +30,11 @@ func ImportStudentsFromCSV(csvFile *multipart.FileHeader) []interface{} {
 		// Getting valuse for the map
 		var student = map[string]interface{}{}
 		for i, v := range row {
-			student[headers[i]] = v
+			if number, err := strconv.Atoi(v); err != nil {
+				student[headers[i]] = v
+			} else {
+				student[headers[i]] = number
+			}
 		}
 		// Adding pending status to student
 		student["status"] = "pending"
