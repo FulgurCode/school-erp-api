@@ -144,3 +144,23 @@ func EditStudent(c *gin.Context) {
 	}
 	c.JSON(200, "Updated Successfully")
 }
+
+// POST request on `/api/admin/upload-student-photo`
+func UploadStudentPhoto(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Getting id of student
+	var studentId = c.Query("studentId")
+	// Get uploaded image
+	var file, err = c.FormFile("file")
+	helpers.CheckNilErr(err)
+	err = c.SaveUploadedFile(file, "./public/images/students/"+studentId+".jpg")
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Successfully added")
+}
