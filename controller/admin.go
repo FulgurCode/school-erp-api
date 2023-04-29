@@ -96,8 +96,9 @@ func GetStudentsRoute(c *gin.Context) {
 	// Getting search details
 	var search = c.Query("search")
 	var value = c.Query("value")
+	var status = c.Query("status")
 	// Getting students and sending response
-	var students, err = adminHelpers.GetStudents(search, value)
+	var students, err = adminHelpers.GetStudents(search, value, status)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
