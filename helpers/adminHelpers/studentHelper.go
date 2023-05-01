@@ -14,7 +14,7 @@ func GetStudents(search string, value string, status string) ([]map[string]inter
 		// Getting student by admission number
 		var admissionNo, _ = strconv.Atoi(value)
 		var query = bson.M{"admissionNo": admissionNo}
-		var students, err = databaseHelpers.GetStudentByAdmissionNo(query)
+		var students, err = databaseHelpers.GetStudents(query)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
@@ -28,7 +28,7 @@ func GetStudents(search string, value string, status string) ([]map[string]inter
 		} else {
 			query = bson.M{"applicationNo": applicationNo}
 		}
-		var students, err = databaseHelpers.GetStudentByApplicationNo(query)
+		var students, err = databaseHelpers.GetStudents(query)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
@@ -42,7 +42,7 @@ func GetStudents(search string, value string, status string) ([]map[string]inter
 		} else {
 			query = bson.M{"name": name}
 		}
-		var students, err = databaseHelpers.GetStudentByName(query)
+		var students, err = databaseHelpers.GetStudents(query)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
