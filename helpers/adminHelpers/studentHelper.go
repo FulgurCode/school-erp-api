@@ -36,13 +36,7 @@ func GetStudents(search string, value string, status string) ([]map[string]inter
 	case "name":
 		// Getting student by name
 		var name = value
-		var query bson.M
-		if status != "" {
-			query = bson.M{"name": name, "status": status}
-		} else {
-			query = bson.M{"name": name}
-		}
-		var students, err = databaseHelpers.GetStudents(query)
+		var students, err = databaseHelpers.GetStudentsByName(name, status)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
