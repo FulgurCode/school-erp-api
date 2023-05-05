@@ -146,7 +146,7 @@ func EditStudent(c *gin.Context) {
 	c.JSON(200, "Updated Successfully")
 }
 
-// POST request on `/api/admin/upload-student-photo`
+// POST request on '/api/admin/upload-student-photo'
 func UploadStudentPhoto(c *gin.Context) {
 	// Checking if logged in
 	if !adminHelpers.CheckLogin(c) {
@@ -164,4 +164,22 @@ func UploadStudentPhoto(c *gin.Context) {
 		return
 	}
 	c.JSON(200, "Successfully added")
+}
+
+// POST request on '/api/admin/add-teacher'
+func AddTeacher(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	// Add teacher to database
+	var err = databaseHelpers.AddTeacher(data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Teacher added")
 }

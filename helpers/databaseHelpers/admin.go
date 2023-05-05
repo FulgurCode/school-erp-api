@@ -28,3 +28,12 @@ func UpdateAdminPassword(id primitive.ObjectID, password string) error {
 	var _, err = db.Collection("admin").UpdateOne(context.Background(), bson.M{"_id": id}, bson.M{"$set": bson.M{"password": password}})
 	return err
 }
+
+// Add teacher to database
+func AddTeacher(teacher map[string]interface{}) error {
+	// database
+	var db = connections.Db
+	// Insert teacher
+	var _, err = db.Collection("teachers").InsertOne(context.Background(), teacher)
+	return err
+}
