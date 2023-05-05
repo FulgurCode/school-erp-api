@@ -183,3 +183,21 @@ func AddTeacher(c *gin.Context) {
 	}
 	c.JSON(200, "Teacher added")
 }
+
+// POST request on '/api/admin/add-duty'
+func AddDuty(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+  // add new duty
+	var err = databaseHelpers.AddDuty(data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Duty added")
+}

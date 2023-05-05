@@ -37,3 +37,11 @@ func AddTeacher(teacher map[string]interface{}) error {
 	var _, err = db.Collection("teachers").InsertOne(context.Background(), teacher)
 	return err
 }
+
+// Add duty to teacher
+func AddDuty(duty map[string]interface{}) error {
+	// database
+	var db = connections.Db
+	var _, err = db.Collection("duty").InsertOne(context.Background(), duty)
+	return err
+}
