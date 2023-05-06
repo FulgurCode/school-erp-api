@@ -239,3 +239,23 @@ func GetTeacher(c *gin.Context) {
 	}
 	c.JSON(200, teacher)
 }
+
+// POST request on '/api/admin/import-teachers'
+func ImportTeachers(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Getting uploaded data file
+	var file, err = c.FormFile("file")
+	helpers.CheckNilErr(err)
+	var teachers = studentHelpers.ImportTeachersFromCSV(file)
+	// importing teachers to database sending response
+	err = databaseHelpers.ImportTeachers(teachers)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Successfully added")
+}
