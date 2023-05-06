@@ -37,4 +37,6 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.POST("/add-teacher", controller.AddTeacher)
 	// add-duty route
 	router.POST("/add-duty", controller.AddDuty)
+	// get-teacher route
+	router.GET("/get-teacher", controller.GetTeacher)
 }

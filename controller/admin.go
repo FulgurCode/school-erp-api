@@ -220,3 +220,22 @@ func GetStudent(c *gin.Context) {
 	}
 	c.JSON(200, student)
 }
+
+// GET request on '/api/admin/get-teacher'
+func GetTeacher(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting object id of teacher
+	var teacherId, err = primitive.ObjectIDFromHex(c.Query("teacherId"))
+	helpers.CheckNilErr(err)
+	// Getting teacher using id
+	teacher, err := databaseHelpers.GetTeacher(teacherId)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, teacher)
+}
