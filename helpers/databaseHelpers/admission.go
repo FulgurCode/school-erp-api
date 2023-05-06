@@ -61,3 +61,12 @@ func UpdateStudent(admissionId primitive.ObjectID, student map[string]interface{
 	helpers.CheckNilErr(err)
 	return err
 }
+
+// Importing multiple teachers to database
+func ImportTeachers(teachers []interface{}) error {
+	// database
+	var db = connections.Db
+	// Importing teachers
+	var _, err = db.Collection("teachers").InsertMany(context.Background(), teachers)
+	return err
+}
