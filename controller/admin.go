@@ -193,11 +193,30 @@ func AddDuty(c *gin.Context) {
 	}
 	// Getting request body
 	var data = helpers.GetRequestBody(c)
-  // add new duty
+	// add new duty
 	var err = databaseHelpers.AddDuty(data)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
 	}
 	c.JSON(200, "Duty added")
+}
+
+// GET request on '/api/admin/get-student'
+func GetStudent(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting object id of student
+	var studentId, err = primitive.ObjectIDFromHex(c.Query("studentId"))
+	helpers.CheckNilErr(err)
+	// Getting student using id
+	student, err := databaseHelpers.GetStudent(studentId)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, student)
 }

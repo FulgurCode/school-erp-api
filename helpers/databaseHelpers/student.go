@@ -5,6 +5,7 @@ import (
 
 	"github.com/FulgurCode/school-erp-api/connections"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Getting student details from database usign query
@@ -40,4 +41,14 @@ func GetStudentsByName(name string, status string) ([]map[string]interface{}, er
 		}
 	}
 	return students, err
+}
+
+// Getting student details using student id
+func GetStudent(studentId primitive.ObjectID) (map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// get student and return
+	var student map[string]interface{}
+	var err = db.Collection("students").FindOne(context.Background(), bson.M{"_id": studentId}).Decode(&student)
+	return student, err
 }

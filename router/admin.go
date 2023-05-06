@@ -29,6 +29,8 @@ func AdminRouter(router *gin.RouterGroup) {
 	// Student
 	// get-student route
 	router.GET("/get-students", controller.GetStudentsRoute)
+	// get-student route
+	router.GET("/get-student", controller.GetStudent)
 
 	// Teacher
 	// add-teacher route
