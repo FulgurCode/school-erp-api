@@ -8,7 +8,20 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+// Storing admin id in session
+func LoginWithSesssion(c *gin.Context, teacher map[string]interface{}) {
+	var session = sessions.DefaultMany(c, "admin")
+	session.Set("isLoggedIn", true)
+	session.Set("id", teacher["_id"].(primitive.ObjectID).Hex())
+	// Saving session for 1 years
+	var maxAge = 60 * 60 * 24 * 365 * 100
+	session.Options(sessions.Options{MaxAge: maxAge})
+	var err = session.Save()
+	helpers.CheckNilErr(err)
+}
 
 // Checking if teacher user exists
 func UserExists(teacher map[string]interface{}) bool {
@@ -17,7 +30,7 @@ func UserExists(teacher map[string]interface{}) bool {
 }
 
 // Set up signup otp
-func SignUpSetOTP(c *gin.Context, data map[string]interface{}) {
+func SignUpSetOTP(c *gin.Context, data map[string]interface{}) error {
 	// Creating OTP and storing in session
 	var otp = helpers.CreateOTP()
 	var session = sessions.DefaultMany(c, "teacherSignupOTP")
@@ -28,7 +41,8 @@ func SignUpSetOTP(c *gin.Context, data map[string]interface{}) {
 	session.Set("teacherPassword", data["password"].(string))
 	session.Save()
 	// Sending OTP to email and Response for request
-	helpers.SendOTP(otp, data["email"].(string))
+	var err = helpers.SendOTP(otp, data["email"].(string))
+	return err
 }
 
 // Compare OTP

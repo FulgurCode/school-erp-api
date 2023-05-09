@@ -25,7 +25,10 @@ func TeacherSignup(c *gin.Context) {
 	if !exists {
 		c.JSON(409, "Account already made")
 	}
-	teacherHelpers.SignUpSetOTP(c, data)
+	err = teacherHelpers.SignUpSetOTP(c, data)
+	if err != nil {
+		c.JSON(500, "Network issue")
+	}
 	c.JSON(200, "OTP sended to the email adress")
 }
 
@@ -40,4 +43,28 @@ func TeacherSignupOTP(c *gin.Context) {
 	}
 	teacherHelpers.CreateTeacherUser(c)
 	c.JSON(200, "Teacher account created")
+}
+
+// POST request '/api/teacher/login'
+func TeacherLogin(c *gin.Context) {
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	// Checking for username
+	var teacher, err = databaseHelpers.GetTeacherWithEmail(data["email"].(string))
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			c.JSON(401, "Wrong username or password")
+			return
+		}
+		c.JSON(500, "Request failed")
+	}
+	// Comparing password and sending response
+	var result = helpers.ComparePassword(teacher["password"].(string), data["password"].(string))
+	if !result {
+		c.JSON(401, "Wrong username or password")
+		return
+	}
+	// storing id and sending response if password is correct
+	teacherHelpers.LoginWithSesssion(c, teacher)
+	c.JSON(200, "Login Successful")
 }

@@ -41,7 +41,7 @@ func CreateOTP() int {
 }
 
 // send OTP to email address
-func SendOTP(otp int, email string) {
+func SendOTP(otp int, email string) error {
 	// Getting mail and password (should be zohomail)
 	var sendMailAddress = os.Getenv("MAIL_ADDRESS")
 	var sendMailPassword = os.Getenv("MAIL_PASSWORD")
@@ -55,7 +55,7 @@ func SendOTP(otp int, email string) {
 	// Sendig email
 	var dialer = gomail.NewDialer("smtp.gmail.com", 465, sendMailAddress, sendMailPassword)
 	var err = dialer.DialAndSend(m)
-	CheckNilErr(err)
+	return err
 }
 
 // Compare OTP
