@@ -43,3 +43,17 @@ func UpdateTeacherWithMail(search map[string]interface{}, teacher map[string]int
 	var _, err = db.Collection("teachers").UpdateOne(context.Background(), search, bson.M{"$set": teacher})
 	return err
 }
+
+// Get all teachers
+func GetAllTeachers() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	var result, err = db.Collection("teachers").Find(context.Background(), bson.M{})
+	var students []map[string]interface{}
+	for result.Next(context.Background()) {
+		var student map[string]interface{}
+		result.Decode(&student)
+		students = append(students, student)
+	}
+	return students, err
+}

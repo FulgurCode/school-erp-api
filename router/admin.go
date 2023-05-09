@@ -41,4 +41,6 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/get-teacher", controller.GetTeacher)
 	// import-teachers route
 	router.POST("/import-teachers", controller.ImportTeachers)
+	// get-teachers route
+	router.GET("/get-teachers", controller.GetTeachers)
 }
