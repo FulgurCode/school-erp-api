@@ -25,6 +25,8 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.PUT("/edit-student", controller.EditStudent)
 	// upload-student-photo route
 	router.POST("/upload-student-photo", controller.UploadStudentPhoto)
+	// get-student-photo route
+	router.GET("/get-student-photo", controller.GetStudentPhoto)
 
 	// Student
 	// get-student route

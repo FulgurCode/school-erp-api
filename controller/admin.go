@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"encoding/base64"
+	"io/ioutil"
+
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/adminHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
@@ -164,6 +167,21 @@ func UploadStudentPhoto(c *gin.Context) {
 		return
 	}
 	c.JSON(200, "Successfully added")
+}
+
+// GET request on '/api/admin/get-student-photo'
+func GetStudentPhoto(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In")
+		return
+	}
+	// Getting id of student
+	var studentId = c.Query("studentId")
+	var file, err = ioutil.ReadFile("./public/images/students/" + studentId + ".jpg")
+	helpers.CheckNilErr(err)
+	var str = base64.StdEncoding.EncodeToString(file)
+	c.JSON(200, str)
 }
 
 // POST request on '/api/admin/add-teacher'
