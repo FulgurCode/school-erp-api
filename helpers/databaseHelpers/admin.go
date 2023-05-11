@@ -39,10 +39,12 @@ func AddTeacher(teacher map[string]interface{}) error {
 }
 
 // Add duty to teacher
-func AddDuty(duty map[string]interface{}) error {
+func AddDuty(data map[string]interface{}) error {
 	// database
 	var db = connections.Db
-	var _, err = db.Collection("duties").InsertOne(context.Background(), duty)
+	var teacher, _ = primitive.ObjectIDFromHex(data["teacherId"].(string))
+	var duty = data["duty"].(string)
+	var _, err = db.Collection("duties").InsertOne(context.Background(), bson.M{"teacherId": teacher, "duty": duty})
 	return err
 }
 

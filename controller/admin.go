@@ -301,7 +301,7 @@ func GetDuties(c *gin.Context) {
 		c.JSON(401, "Not Logged in admin")
 		return
 	}
-  // Get duties and send as response
+	// Get duties and send as response
 	var duties, err = databaseHelpers.GetDuties()
 	if err != nil {
 		c.JSON(500, "Request failed")
