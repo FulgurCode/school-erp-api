@@ -13,8 +13,7 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/checklogin", controller.AdminCheckLoginRoute)
 	// logout route
 	router.DELETE("/logout", controller.AdminLogoutRoute)
-	// change-password route
-	router.PUT("/change-password", controller.ChangeAdminPassword)
+	// change-password route router.PUT("/change-password", controller.ChangeAdminPassword)
 
 	// Admission
 	// new-admission route
@@ -45,4 +44,6 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.POST("/import-teachers", controller.ImportTeachers)
 	// get-teachers route
 	router.GET("/get-teachers", controller.GetTeachers)
+	// get-duties route
+	router.GET("/get-duties", controller.GetDuties)
 }

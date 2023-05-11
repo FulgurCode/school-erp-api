@@ -42,6 +42,41 @@ func AddTeacher(teacher map[string]interface{}) error {
 func AddDuty(duty map[string]interface{}) error {
 	// database
 	var db = connections.Db
-	var _, err = db.Collection("duty").InsertOne(context.Background(), duty)
+	var _, err = db.Collection("duties").InsertOne(context.Background(), duty)
 	return err
+}
+
+// Get all duties
+func GetDuties() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Get duties of all teachers
+	var result, err = db.Collection("duties").Aggregate(context.Background(), []bson.M{
+		{
+			"$lookup": bson.M{
+				"from":         "teachers",
+				"localField":   "teacherId",
+				"foreignField": "_id",
+				"as":           "teacher",
+			},
+		},
+		{
+			"$unwind": "$teacher",
+		},
+		{
+			"$project": bson.M{
+				"teacher._id":   1,
+				"teacher.name":  1,
+				"teacher.penNo": 1,
+				"duty":          1,
+			},
+		},
+	})
+	var duties []map[string]interface{}
+	for result.Next(context.Background()) {
+		var duty map[string]interface{}
+		result.Decode(&duty)
+		duties = append(duties, duty)
+	}
+	return duties, err
 }

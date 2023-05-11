@@ -293,3 +293,19 @@ func GetTeachers(c *gin.Context) {
 	}
 	c.JSON(200, teachers)
 }
+
+// GET request on '/api/admin/get-duties'
+func GetDuties(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+  // Get duties and send as response
+	var duties, err = databaseHelpers.GetDuties()
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, duties)
+}
