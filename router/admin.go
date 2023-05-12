@@ -46,4 +46,6 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/get-teachers", controller.GetTeachers)
 	// get-duties route
 	router.GET("/get-duties", controller.GetDuties)
+	// get-duties route
+	router.DELETE("/delete-duty", controller.DeleteDuty)
 }

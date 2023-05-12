@@ -309,3 +309,20 @@ func GetDuties(c *gin.Context) {
 	}
 	c.JSON(200, duties)
 }
+
+// DELETE requset on '/api/admin/delete-duty'
+func DeleteDuty(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// deleting duty and sending response
+	var duty, err = primitive.ObjectIDFromHex(c.Query("duty"))
+	err = databaseHelpers.DeleteDuty(duty)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Duty deleted")
+}

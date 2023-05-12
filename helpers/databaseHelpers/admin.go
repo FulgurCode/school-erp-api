@@ -82,3 +82,11 @@ func GetDuties() ([]map[string]interface{}, error) {
 	}
 	return duties, err
 }
+
+// Delete duty
+func DeleteDuty(id primitive.ObjectID) error {
+	// database
+	var db = connections.Db
+	var _, err = db.Collection("duties").DeleteOne(context.Background(), bson.M{"_id": id})
+	return err
+}
