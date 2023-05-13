@@ -70,3 +70,10 @@ func TeacherLogin(c *gin.Context) {
 	teacherHelpers.LoginWithSesssion(c, teacher)
 	c.JSON(200, "Login Successful")
 }
+
+// GET request on '/api/teacher/checklogin'
+func TeacherCheckLogin(c *gin.Context) {
+	// checking if logged in as teacher and sending response
+	var isLoggedIn = teacherHelpers.CheckLogin(c)
+	c.JSON(200, isLoggedIn)
+}
