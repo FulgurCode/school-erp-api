@@ -74,3 +74,12 @@ func CheckLogin(c *gin.Context) bool {
 	}
 	return false
 }
+
+// Logging out as teacher using session
+func Logout(c *gin.Context) {
+	// clearing teacher session
+	var session = sessions.DefaultMany(c, "teacher")
+	session.Options(sessions.Options{MaxAge: -1})
+	session.Clear()
+	session.Save()
+}
