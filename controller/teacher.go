@@ -75,3 +75,11 @@ func TeacherCheckLogin(c *gin.Context) {
 	var isLoggedIn = teacherHelpers.CheckLogin(c)
 	c.JSON(200, isLoggedIn)
 }
+
+// DELETE request on '/api/teacher/logout'
+func TeacherLogout(c *gin.Context) {
+	// clearing 'teacher' session
+	teacherHelpers.Logout(c)
+	// Response for the request
+	c.JSON(200, "Loggged Out")
+}
