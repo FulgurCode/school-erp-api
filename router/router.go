@@ -26,7 +26,7 @@ func Router() *gin.Engine {
 	// Creating sessions
 	var secret = os.Getenv("SECRET_KEY")
 	var store = cookie.NewStore([]byte(secret))
-	var sessionNames = []string{"admin", "teacherSignupOTP"}
+	var sessionNames = []string{"admin", "teacherSignupOTP", "teacher"}
 	router.Use(sessions.SessionsMany(sessionNames, store))
 
 	// Admin routes

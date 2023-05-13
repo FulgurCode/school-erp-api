@@ -11,9 +11,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Storing admin id in session
+// Storing teacher id in session
 func LoginWithSesssion(c *gin.Context, teacher map[string]interface{}) {
-	var session = sessions.DefaultMany(c, "admin")
+	var session = sessions.DefaultMany(c, "teacher")
 	session.Set("isLoggedIn", true)
 	session.Set("id", teacher["_id"].(primitive.ObjectID).Hex())
 	// Saving session for 1 years
@@ -64,4 +64,13 @@ func CreateTeacherUser(c *gin.Context) error {
 	var teacher = map[string]interface{}{"email": email, "password": password}
 	var err = databaseHelpers.UpdateTeacherWithMail(bson.M{"email": email}, teacher)
 	return err
+}
+
+// Check if teacher logged in
+func CheckLogin(c *gin.Context) bool {
+	var session = sessions.DefaultMany(c, "teacher")
+	if session.Get("isLoggedIn") == true {
+		return true
+	}
+	return false
 }

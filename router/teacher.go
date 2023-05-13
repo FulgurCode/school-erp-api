@@ -13,4 +13,6 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.GET("/signup-otp", controller.TeacherSignupOTP)
 	// login route
 	router.POST("/login", controller.TeacherLogin)
+	// checklogin route
+	router.GET("/checklogin", controller.TeacherCheckLogin)
 }
