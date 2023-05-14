@@ -12,7 +12,6 @@ import (
 func GetStudents(query map[string]interface{}) ([]map[string]interface{}, error) {
 	// database
 	var db = connections.Db
-
 	// Getting students from database
 	var result, err = db.Collection("students").Find(context.Background(), query)
 	var students []map[string]interface{}
@@ -24,10 +23,10 @@ func GetStudents(query map[string]interface{}) ([]map[string]interface{}, error)
 	return students, err
 }
 
+// Getting students using name
 func GetStudentsByName(name string, status string) ([]map[string]interface{}, error) {
 	// database
 	var db = connections.Db
-
 	// Getting students from database
 	var result, err = db.Collection("students").Find(context.Background(), bson.M{"$text": bson.M{"$search": name}})
 	var students []map[string]interface{}
@@ -51,4 +50,19 @@ func GetStudent(studentId primitive.ObjectID) (map[string]interface{}, error) {
 	var student map[string]interface{}
 	var err = db.Collection("students").FindOne(context.Background(), bson.M{"_id": studentId}).Decode(&student)
 	return student, err
+}
+
+// Get admitted students
+func GetAdmittedStudents() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Getting admitted students details from database
+	var result, err = db.Collection("students").Find(context.Background(), bson.M{"status": bson.M{"$ne": "pending"}})
+	var students []map[string]interface{}
+	for result.Next(context.Background()) {
+		var student map[string]interface{}
+		result.Decode(&student)
+		students = append(students, student)
+	}
+	return students, err
 }

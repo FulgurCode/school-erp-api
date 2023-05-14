@@ -85,3 +85,19 @@ func TeacherLogout(c *gin.Context) {
 	// Response for the request
 	c.JSON(200, "Loggged Out")
 }
+
+// GET request on '/api/teacher/get-admitted-students'
+func TeacherGetAdmittedStudents(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting admitted student details and sending response
+	var students, err = databaseHelpers.GetAdmittedStudents()
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, students)
+}
