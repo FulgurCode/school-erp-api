@@ -24,10 +24,12 @@ func TeacherSignup(c *gin.Context) {
 	var exists = teacherHelpers.UserExists(teacher)
 	if !exists {
 		c.JSON(409, "Account already made")
+		return
 	}
 	err = teacherHelpers.SignUpSetOTP(c, data)
 	if err != nil {
 		c.JSON(500, "Network issue")
+		return
 	}
 	c.JSON(200, "OTP sended to the email adress")
 }

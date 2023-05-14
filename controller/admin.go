@@ -178,8 +178,7 @@ func GetStudentPhoto(c *gin.Context) {
 	}
 	// Getting id of student
 	var studentId = c.Query("studentId")
-	var file, err = ioutil.ReadFile("./public/images/students/" + studentId + ".jpg")
-	helpers.CheckNilErr(err)
+	var file, _ = ioutil.ReadFile("./public/images/students/" + studentId + ".jpg")
 	var str = base64.StdEncoding.EncodeToString(file)
 	c.JSON(200, str)
 }
