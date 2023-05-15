@@ -66,3 +66,12 @@ func GetAdmittedStudents() ([]map[string]interface{}, error) {
 	}
 	return students, err
 }
+
+// Verify student
+func VerifyStudent(studentId primitive.ObjectID) error {
+	// database
+	var db = connections.Db
+	// Verify student
+	var _, err = db.Collection("students").UpdateOne(context.Background(), bson.M{"_id": studentId}, bson.M{"$set": bson.M{"verified": true}})
+	return err
+}

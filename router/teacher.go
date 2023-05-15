@@ -19,5 +19,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.DELETE("/logout", controller.TeacherLogout)
 
 	// Admission
+	// get-admitted-students route
 	router.GET("/get-admitted-students", controller.TeacherGetAdmittedStudents)
+	// verify-student route
+	router.PATCH("/verify-student", controller.TeacherVerifyStudent)
 }
