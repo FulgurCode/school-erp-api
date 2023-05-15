@@ -25,4 +25,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.PATCH("/verify-student", controller.TeacherVerifyStudent)
 	// students-to-verify route
 	router.GET("/students-to-verify", controller.TeacherStudentsToVerify)
+
+	// Students
+	// get-student route
+	router.GET("/get-student", controller.TeacherGetStudent)
 }

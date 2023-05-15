@@ -136,3 +136,22 @@ func TeacherStudentsToVerify(c *gin.Context) {
 	}
 	c.JSON(200, students)
 }
+
+// GET request on '/api/teacher/get-student'
+func TeacherGetStudent(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting object id of student
+	var studentId, err = primitive.ObjectIDFromHex(c.Query("studentId"))
+	helpers.CheckNilErr(err)
+	// Getting student using id
+	student, err := databaseHelpers.GetStudent(studentId)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, student)
+}
