@@ -67,6 +67,21 @@ func GetAdmittedStudents() ([]map[string]interface{}, error) {
 	return students, err
 }
 
+// Get students remain to verify
+func GetStudentsToVerify() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Getting admitted students details from database
+	var result, err = db.Collection("students").Find(context.Background(), bson.M{"status": bson.M{"$ne": "pending"}, "verified": bson.M{"$ne": true}})
+	var students = []map[string]interface{}{}
+	for result.Next(context.Background()) {
+		var student map[string]interface{}
+		result.Decode(&student)
+		students = append(students, student)
+	}
+	return students, err
+}
+
 // Verify student
 func VerifyStudent(studentId primitive.ObjectID) error {
 	// database

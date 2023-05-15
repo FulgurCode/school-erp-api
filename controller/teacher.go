@@ -120,3 +120,19 @@ func TeacherVerifyStudent(c *gin.Context) {
 	}
 	c.JSON(200, "Student verifyed")
 }
+
+// GET request on '/api/teacher/students-to-verify'
+func TeacherStudentsToVerify(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting students that is remain to verify and sending response
+	var students, err = databaseHelpers.GetStudentsToVerify()
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, students)
+}
