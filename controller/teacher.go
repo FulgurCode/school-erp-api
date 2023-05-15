@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"encoding/base64"
+	"io/ioutil"
+
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/teacherHelpers"
@@ -154,4 +157,18 @@ func TeacherGetStudent(c *gin.Context) {
 		return
 	}
 	c.JSON(200, student)
+}
+
+// GET request on '/api/teacher/get-student-photo'
+func TeacherGetStudentPhoto(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting id of student
+	var studentId = c.Query("studentId")
+	var file, _ = ioutil.ReadFile("./public/images/students/" + studentId + ".jpg")
+	var str = base64.StdEncoding.EncodeToString(file)
+	c.JSON(200, str)
 }
