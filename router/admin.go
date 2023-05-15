@@ -29,6 +29,8 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/get-student-photo", controller.GetStudentPhoto)
 	// students-to-confirm route
 	router.GET("/students-to-confirm", controller.AdminStudentsToConfirm)
+	// confirm-student route
+	router.PATCH("/confirm-student", controller.AdminConfirmStudent)
 
 	// Student
 	// get-student route

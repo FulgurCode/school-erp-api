@@ -105,3 +105,12 @@ func GetStudentsToConfirm() ([]map[string]interface{}, error) {
 	}
 	return students, err
 }
+
+// Confirm student
+func ConfirmStudent(studentId primitive.ObjectID) error {
+	// database
+	var db = connections.Db
+	// Confirm student
+	var _, err = db.Collection("students").UpdateOne(context.Background(), bson.M{"_id": studentId}, bson.M{"$set": bson.M{"confirmed": true}})
+	return err
+}

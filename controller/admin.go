@@ -341,3 +341,21 @@ func AdminStudentsToConfirm(c *gin.Context) {
 	}
 	c.JSON(200, students)
 }
+
+// PATCH request on '/api/admin/confirm-student'
+func AdminConfirmStudent(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting student id
+	var studentId, _ = primitive.ObjectIDFromHex(c.Query("studentId"))
+	// verifying student and sending response
+	var err = databaseHelpers.ConfirmStudent(studentId)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Student Confirmed")
+}
