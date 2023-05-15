@@ -5,6 +5,7 @@ import (
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/teacherHelpers"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -100,4 +101,22 @@ func TeacherGetAdmittedStudents(c *gin.Context) {
 		return
 	}
 	c.JSON(200, students)
+}
+
+// PATCH request on '/api/teacher/verify-student'
+func TeacherVerifyStudent(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting student id
+	var studentId, _ = primitive.ObjectIDFromHex(c.Query("studentId"))
+	// verifying student and sending response
+	var err = databaseHelpers.VerifyStudent(studentId)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Student verifyed")
 }
