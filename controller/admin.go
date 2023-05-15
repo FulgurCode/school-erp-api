@@ -325,3 +325,19 @@ func DeleteDuty(c *gin.Context) {
 	}
 	c.JSON(200, "Duty deleted")
 }
+
+// GET request on '/api/admin/students-to-confirm'
+func AdminStudentsToConfirm(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting students that is remain to confirm and sending response
+	var students, err = databaseHelpers.GetStudentsToConfirm()
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, students)
+}

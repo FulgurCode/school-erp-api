@@ -90,3 +90,18 @@ func VerifyStudent(studentId primitive.ObjectID) error {
 	var _, err = db.Collection("students").UpdateOne(context.Background(), bson.M{"_id": studentId}, bson.M{"$set": bson.M{"verified": true}})
 	return err
 }
+
+// Getting students that remain to confirm
+func GetStudentsToConfirm() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Getting students that verified which is not confirmed
+	var result, err = db.Collection("students").Find(context.Background(), bson.M{"status": bson.M{"$ne": "pending"}, "verified": true, "confirmed": bson.M{"$ne": true}})
+	var students = []map[string]interface{}{}
+	for result.Next(context.Background()) {
+		var student map[string]interface{}
+		result.Decode(&student)
+		students = append(students, student)
+	}
+	return students, err
+}
