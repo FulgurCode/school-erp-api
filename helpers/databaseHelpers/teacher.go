@@ -57,3 +57,13 @@ func GetAllTeachers() ([]map[string]interface{}, error) {
 	}
 	return students, err
 }
+
+// Get duty
+func GetDuty(id primitive.ObjectID, dutyName string) (map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Get teacher duty
+	var duty map[string]interface{}
+	var err = db.Collection("duties").FindOne(context.Background(), bson.M{"teacherId": id, "duty": dutyName}).Decode(&duty)
+	return duty, err
+}

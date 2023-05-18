@@ -172,3 +172,24 @@ func TeacherGetStudentPhoto(c *gin.Context) {
 	var str = base64.StdEncoding.EncodeToString(file)
 	c.JSON(200, str)
 }
+
+// GET request on '/api/teacer/have-duty'
+func TeacherHaveDuty(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	var id = teacherHelpers.GetId(c)
+	var dutyName = c.Query("duty")
+	var _, err = databaseHelpers.GetDuty(id, dutyName)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			c.JSON(200, false)
+			return
+		}
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, true)
+}

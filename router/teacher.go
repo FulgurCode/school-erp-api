@@ -31,4 +31,7 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.GET("/get-student", controller.TeacherGetStudent)
 	// get-student-photo route
 	router.GET("/get-student-photo", controller.TeacherGetStudentPhoto)
+
+	// Permission
+	router.GET("/have-duty", controller.TeacherHaveDuty)
 }

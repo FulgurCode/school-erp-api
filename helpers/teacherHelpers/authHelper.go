@@ -83,3 +83,10 @@ func Logout(c *gin.Context) {
 	session.Clear()
 	session.Save()
 }
+
+// Getting id
+func GetId(c *gin.Context) primitive.ObjectID {
+	var session = sessions.DefaultMany(c, "teacher")
+	var id, _ = primitive.ObjectIDFromHex(session.Get("id").(string))
+	return id
+}
