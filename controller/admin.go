@@ -2,7 +2,9 @@ package controller
 
 import (
 	"encoding/base64"
+	"errors"
 	"io/ioutil"
+	"os"
 
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/adminHelpers"
@@ -178,7 +180,16 @@ func GetStudentPhoto(c *gin.Context) {
 	}
 	// Getting id of student
 	var studentId = c.Query("studentId")
-	var file, _ = ioutil.ReadFile("./public/images/students/" + studentId + ".jpg")
+	// Getting image and sending response
+	var file, err = ioutil.ReadFile("./public/images/students/" + studentId + ".jpg")
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			c.JSON(404, "Image not found")
+			return
+		}
+		c.JSON(500, "Request failed")
+		return
+	}
 	var str = base64.StdEncoding.EncodeToString(file)
 	c.JSON(200, str)
 }
