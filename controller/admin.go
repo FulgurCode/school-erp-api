@@ -370,3 +370,19 @@ func AdminConfirmStudent(c *gin.Context) {
 	}
 	c.JSON(200, "Student Confirmed")
 }
+
+// GET request on '/api/admin/students-to-verify'
+func AdminStudentsToVerify(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+	// Getting students that is remain to verify and sending response
+	var students, err = databaseHelpers.GetStudentsToVerify()
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, students)
+}
