@@ -225,3 +225,21 @@ func TeacherGetStudentsRoute(c *gin.Context) {
 	}
 	c.JSON(200, students)
 }
+
+// POST request on '/api/admin/new-admission'
+func TeacherNewAdmissionRoute(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	// Adding student to database and sending response
+	var id, err = studentHelpers.AddNewAdmission(data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, id)
+}

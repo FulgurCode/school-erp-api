@@ -1,4 +1,4 @@
-package adminHelpers
+package studentHelpers 
 
 import (
 	"sync"

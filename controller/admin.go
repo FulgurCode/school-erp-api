@@ -83,7 +83,7 @@ func NewAdmissionRoute(c *gin.Context) {
 	// Getting request body
 	var data = helpers.GetRequestBody(c)
 	// Adding student to database and sending response
-	var id, err = adminHelpers.AddNewAdmission(data)
+	var id, err = studentHelpers.AddNewAdmission(data)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
@@ -143,7 +143,7 @@ func EditStudent(c *gin.Context) {
 	helpers.CheckNilErr(err)
 	// Getting request body
 	var data = helpers.GetRequestBody(c)
-	err = adminHelpers.EditStudent(studentId, data)
+	err = studentHelpers.EditStudent(studentId, data)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
