@@ -8,6 +8,7 @@ import (
 
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
+	"github.com/FulgurCode/school-erp-api/helpers/studentHelpers"
 	"github.com/FulgurCode/school-erp-api/helpers/teacherHelpers"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -203,4 +204,24 @@ func TeacherHaveDuty(c *gin.Context) {
 		return
 	}
 	c.JSON(200, true)
+}
+
+// GET request on '/api/teacher/get-students'
+func TeacherGetStudentsRoute(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting search details
+	var search = c.Query("search")
+	var value = c.Query("value")
+	var status = c.Query("status")
+	// Getting students and sending response
+	var students, err = studentHelpers.GetStudents(search, value, status)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, students)
 }

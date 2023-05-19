@@ -103,7 +103,7 @@ func GetStudentsRoute(c *gin.Context) {
 	var value = c.Query("value")
 	var status = c.Query("status")
 	// Getting students and sending response
-	var students, err = adminHelpers.GetStudents(search, value, status)
+	var students, err = studentHelpers.GetStudents(search, value, status)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
