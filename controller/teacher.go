@@ -243,3 +243,23 @@ func TeacherNewAdmissionRoute(c *gin.Context) {
 	}
 	c.JSON(200, id)
 }
+
+// PUT request on '/api/teacher/edit-student'
+func TeacherEditStudent(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting object id of student
+	var studentId, err = primitive.ObjectIDFromHex(c.Query("studentId"))
+	helpers.CheckNilErr(err)
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	err = studentHelpers.EditStudent(studentId, data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Updated Successfully")
+}

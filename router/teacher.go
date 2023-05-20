@@ -21,6 +21,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	// Admission
 	// new-admission route
 	router.POST("/new-admission", controller.TeacherNewAdmissionRoute)
+	// edit-student route
+	router.PUT("/edit-student", controller.TeacherEditStudent)
 	// get-admitted-students route
 	router.GET("/get-admitted-students", controller.TeacherGetAdmittedStudents)
 	// verify-student route
