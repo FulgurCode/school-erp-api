@@ -1,6 +1,9 @@
 package helpers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+)
 
 // Checking if there is any error
 func CheckNilErr(err error) {
@@ -16,3 +19,8 @@ func GetRequestBody(c *gin.Context) map[string]interface{} {
 	CheckNilErr(err)
 	return data
 }
+
+func GenerateUniqueID() string {
+	return uuid.New().String()
+}
+

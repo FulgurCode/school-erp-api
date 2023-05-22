@@ -16,7 +16,7 @@ func Router() *gin.Engine {
 	// cors setup
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins:  false,
-		AllowOrigins:     []string{"http://localhost:5173"},
+    AllowOrigins:     []string{"http://localhost:5173", "http://192.168.20.23:5173"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Authorization", "Origin", "Content-Length", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -33,6 +33,10 @@ func Router() *gin.Engine {
 	AdminRouter(router.Group("/api/admin"))
 	// Teacher routes
 	TeacherRouter(router.Group("/api/teacher"))
+
+	router.GET("/ws/admission-photo", func(c *gin.Context) {
+		HandleWebSocket(c)
+	})
 
 	return router
 }
