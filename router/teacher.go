@@ -25,6 +25,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.PUT("/edit-student", controller.TeacherEditStudent)
 	// upload-student-photo route
 	router.POST("/upload-student-photo", controller.TeacherUploadStudentPhoto)
+	// import-students route
+	router.POST("/import-students", controller.TeacherImportStudents)
 	// get-admitted-students route
 	router.GET("/get-admitted-students", controller.TeacherGetAdmittedStudents)
 	// verify-student route

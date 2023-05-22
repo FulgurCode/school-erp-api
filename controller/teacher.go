@@ -284,3 +284,22 @@ func TeacherUploadStudentPhoto(c *gin.Context) {
 	c.JSON(200, "Successfully added")
 }
 
+// POST request on '/api/teacher/import-students'
+func TeacherImportStudents(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting uploaded data file
+	var file, err = c.FormFile("file")
+	helpers.CheckNilErr(err)
+	var students = studentHelpers.ImportStudentsFromCSV(file)
+	// importing students to database sending response
+	err = databaseHelpers.ImportStudents(students)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Successfully added")
+}
