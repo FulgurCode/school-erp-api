@@ -38,7 +38,7 @@ func HandleWebSocket(c *gin.Context) {
 	connections[id] = conn
 	connectionsM.Unlock()
 	conn.WriteJSON(map[string]interface{}{"name": "id", "data": id})
-  // Handling socket messages
+	// Handling socket messages
 	for {
 		// Reading and decoding message from client
 		_, msg, err := conn.ReadMessage()
@@ -57,7 +57,7 @@ func HandleWebSocket(c *gin.Context) {
 			targetConn.WriteJSON(map[string]interface{}{"name": data.Name, "data": data.Data})
 		}
 	}
-  // Closing connection and removing from connections
+	// Closing connection and removing from connections
 	conn.Close()
 	connectionsM.Lock()
 	delete(connections, id)
