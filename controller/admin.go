@@ -420,3 +420,19 @@ func AdminCourseLanguageReport(c *gin.Context) {
 	}
 	c.JSON(200, data)
 }
+
+// Get request on '/api/admin/course-status-report'
+func AdminCourseStatusReport(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+  // Getting data from database and sending response
+	var data, err = databaseHelpers.CourseStatusReport()
+	if err != nil {
+		c.JSON(500, "Request failed")
+    return
+	}
+	c.JSON(200, data)
+}

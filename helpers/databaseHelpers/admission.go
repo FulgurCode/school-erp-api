@@ -75,7 +75,7 @@ func ImportTeachers(teachers []interface{}) error {
 func CourseLanguageReport() ([]map[string]interface{}, error) {
 	// database
 	var db = connections.Db
-  // Gettnig data from database 
+	// Gettnig data from database
 	var result, err = db.Collection("students").Aggregate(context.Background(), []bson.M{
 		{
 			"$group": bson.M{
@@ -89,6 +89,34 @@ func CourseLanguageReport() ([]map[string]interface{}, error) {
 				"count":          1,
 				"secondLanguage": "$_id.secondLanguage",
 				"_id":            0,
+			},
+		},
+	})
+	var datas []map[string]interface{}
+	for result.Next(context.Background()) {
+		var data map[string]interface{}
+		result.Decode(&data)
+		datas = append(datas, data)
+	}
+	return datas, err
+}
+
+func CourseStatusReport() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	var result, err = db.Collection("students").Aggregate(context.Background(), []bson.M{
+		{
+			"$group": bson.M{
+				"_id":   bson.M{"course": "$course", "status": "$status"},
+				"count": bson.M{"$sum": 1},
+			},
+		},
+		{
+			"$project": bson.M{
+				"course": "$_id.course",
+				"count":  1,
+				"status": "$_id.status",
+				"_id":    0,
 			},
 		},
 	})

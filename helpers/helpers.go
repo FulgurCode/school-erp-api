@@ -20,7 +20,7 @@ func GetRequestBody(c *gin.Context) map[string]interface{} {
 	return data
 }
 
+// Genarate unique id
 func GenerateUniqueID() string {
 	return uuid.New().String()
 }
-
