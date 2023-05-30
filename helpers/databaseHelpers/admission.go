@@ -158,3 +158,32 @@ func CourseGenderReport() ([]map[string]interface{}, error) {
 	}
 	return datas, err
 }
+
+// Get course and category report
+func CourseCategoryReport() ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	var result, err = db.Collection("students").Aggregate(context.Background(), []bson.M{
+		{
+			"$group": bson.M{
+				"_id":   bson.M{"course": "$course", "category": "$category"},
+				"count": bson.M{"$sum": 1},
+			},
+		},
+		{
+			"$project": bson.M{
+				"course": "$_id.course",
+				"count":  1,
+				"category": "$_id.category",
+				"_id":    0,
+			},
+		},
+	})
+	var datas []map[string]interface{}
+	for result.Next(context.Background()) {
+		var data map[string]interface{}
+		result.Decode(&data)
+		datas = append(datas, data)
+	}
+	return datas, err
+}
