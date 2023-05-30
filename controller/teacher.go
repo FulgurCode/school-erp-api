@@ -319,3 +319,19 @@ func TeacherCourseLanguageReport(c *gin.Context) {
 	}
 	c.JSON(200, data)
 }
+
+// Get request on '/api/teacher/course-status-report'
+func TeacherCourseStatusReport(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in teacher")
+		return
+	}
+  // Getting data from database and sending response
+	var data, err = databaseHelpers.CourseStatusReport()
+	if err != nil {
+		c.JSON(500, "Request failed")
+    return
+	}
+	c.JSON(200, data)
+}

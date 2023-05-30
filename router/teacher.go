@@ -35,6 +35,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.GET("/students-to-verify", controller.TeacherStudentsToVerify)
 	// course-language-report route
 	router.GET("/course-language-report", controller.TeacherCourseLanguageReport)
+	// course-status-report
+	router.GET("/course-status-report", controller.TeacherCourseStatusReport)
 
 	// Students
 	// get-students route
