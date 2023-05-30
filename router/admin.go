@@ -35,7 +35,7 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.PATCH("/verify-student", controller.AdminVerifyStudent)
 	// students-to-verify route
 	router.GET("/students-to-verify", controller.AdminStudentsToVerify)
-	///course-language-report route
+	// course-language-report route
 	router.GET("/course-language-report", controller.AdminCourseLanguageReport)
 	// course-status-report
 	router.GET("/course-status-report", controller.AdminCourseStatusReport)

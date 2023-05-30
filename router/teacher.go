@@ -33,6 +33,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.PATCH("/verify-student", controller.TeacherVerifyStudent)
 	// students-to-verify route
 	router.GET("/students-to-verify", controller.TeacherStudentsToVerify)
+	// course-language-report route
+	router.GET("/course-language-report", controller.TeacherCourseLanguageReport)
 
 	// Students
 	// get-students route
