@@ -7,7 +7,6 @@ import (
 
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 // Converting CSV to map[string]interface{}
@@ -81,42 +80,21 @@ func ImportTeachersFromCSV(csvFile *multipart.FileHeader) []interface{} {
 	}
 	return teachers
 }
+
 // Getting students according to search type
-func GetStudents(search string, value string, status string) ([]map[string]interface{}, error) {
-	switch search {
-	case "admissionNo":
-		// Getting student by admission number
-		var admissionNo, _ = strconv.Atoi(value)
-		var query = bson.M{"admissionNo": admissionNo}
-		var students, err = databaseHelpers.GetStudents(query)
+func GetStudents(data map[string]interface{}, name string) ([]map[string]interface{}, error) {
+	// Getting student details with name
+	if name == "" {
+		var students, err = databaseHelpers.GetStudents(data)
 		if students == nil {
 			return []map[string]interface{}{}, nil
 		}
 		return students, err
-	case "applicationNo":
-		// Getting student by application number
-		var applicationNo, _ = strconv.Atoi(value)
-		var query bson.M
-		if status != "" {
-			query = bson.M{"applicationNo": applicationNo, "status": status}
-		} else {
-			query = bson.M{"applicationNo": applicationNo}
-		}
-		var students, err = databaseHelpers.GetStudents(query)
-		if students == nil {
-			return []map[string]interface{}{}, nil
-		}
-		return students, err
-	case "name":
-		// Getting student by name
-		var name = value
-		var students, err = databaseHelpers.GetStudentsByName(name, status)
-		if students == nil {
-			return []map[string]interface{}{}, nil
-		}
-		return students, err
-	default:
-		// Sending empty array if search type is random
+	}
+	// Getting student details without name
+	var students, err = databaseHelpers.GetStudentsByName(name, data)
+	if students == nil {
 		return []map[string]interface{}{}, nil
 	}
+	return students, err
 }
