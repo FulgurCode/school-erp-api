@@ -41,6 +41,8 @@ func TeacherRouter(router *gin.RouterGroup) {
 	router.GET("/course-gender-report", controller.TeacherCourseGenderReport)
 	// course-category-report
 	router.GET("/course-category-report", controller.TeacherCourseCategoryReport)
+	// course-caste-report
+	router.GET("/course-caste-report", controller.TeacherCourseCasteReport)
 
 	// Students
 	// get-students route
