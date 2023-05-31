@@ -468,3 +468,19 @@ func AdminCourseCategoryReport(c *gin.Context) {
 	}
 	c.JSON(200, data)
 }
+
+// Get request on '/api/admin/course-caste-report'
+func AdminCourseCasteReport(c *gin.Context) {
+	// Checking if logged in
+	if !adminHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged in admin")
+		return
+	}
+  // Getting data from database and sending response
+	var data, err = databaseHelpers.CourseCasteReport()
+	if err != nil {
+		c.JSON(500, "Request failed")
+    return
+	}
+	c.JSON(200, data)
+}

@@ -43,6 +43,8 @@ func AdminRouter(router *gin.RouterGroup) {
 	router.GET("/course-gender-report", controller.AdminCourseGenderReport)
 	// course-category-report
 	router.GET("/course-category-report", controller.AdminCourseCategoryReport)
+	// course-caste-report
+	router.GET("/course-caste-report", controller.AdminCourseCasteReport)
 
 	// Student
 	// get-student route
