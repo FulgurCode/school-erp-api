@@ -46,7 +46,7 @@ func TeacherRouter(router *gin.RouterGroup) {
 
 	// Students
 	// get-students route
-	router.GET("/get-students", controller.TeacherGetStudentsRoute)
+	router.POST("/get-students", controller.TeacherGetStudentsRoute)
 	// get-student route
 	router.GET("/get-student", controller.TeacherGetStudent)
 	// get-student-photo route

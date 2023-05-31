@@ -24,20 +24,19 @@ func GetStudents(query map[string]interface{}) ([]map[string]interface{}, error)
 }
 
 // Getting students using name
-func GetStudentsByName(name string, status string) ([]map[string]interface{}, error) {
+func GetStudentsByName(name string, data map[string]interface{}) ([]map[string]interface{}, error) {
 	// database
 	var db = connections.Db
-	// Getting students from database
-	var result, err = db.Collection("students").Find(context.Background(), bson.M{"$text": bson.M{"$search": name}})
+	var result, err = db.Collection("students").Aggregate(context.Background(), []bson.M{
+		{
+			"$match": bson.M{"$and": []bson.M{{"$text": bson.M{"$search": name}}, data}},
+		},
+	})
 	var students []map[string]interface{}
 	for result.Next(context.Background()) {
 		var student map[string]interface{}
 		result.Decode(&student)
-		if status != "" && student["status"] == status {
-			students = append(students, student)
-		} else {
-			students = append(students, student)
-		}
+		students = append(students, student)
 	}
 	return students, err
 }

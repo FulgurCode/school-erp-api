@@ -99,11 +99,10 @@ func GetStudentsRoute(c *gin.Context) {
 		return
 	}
 	// Getting search details
-	var search = c.Query("search")
-	var value = c.Query("value")
-	var status = c.Query("status")
+	var data = helpers.GetRequestBody(c)
+	var name = c.Query("name")
 	// Getting students and sending response
-	var students, err = studentHelpers.GetStudents(search, value, status)
+	var students, err = studentHelpers.GetStudents(data, name)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
@@ -412,11 +411,11 @@ func AdminCourseLanguageReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in admin")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseLanguageReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -428,11 +427,11 @@ func AdminCourseStatusReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in admin")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseStatusReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -444,11 +443,11 @@ func AdminCourseGenderReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in admin")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseGenderReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -460,11 +459,11 @@ func AdminCourseCategoryReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in admin")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseCategoryReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
