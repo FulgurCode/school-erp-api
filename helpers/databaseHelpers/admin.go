@@ -14,9 +14,7 @@ func GetAdminWithUsername(username string) (map[string]interface{}, error) {
 	var db = connections.Db
 	// Get admin user and return
 	var admin map[string]interface{}
-	var result = db.Collection("admin").FindOne(context.Background(), bson.M{"username": username})
-	var err = result.Err()
-	result.Decode(&admin)
+	var err = db.Collection("admin").FindOne(context.Background(), bson.M{"username": username}).Decode(&admin)
 	return admin, err
 }
 
@@ -89,4 +87,14 @@ func DeleteDuty(id primitive.ObjectID) error {
 	var db = connections.Db
 	var _, err = db.Collection("duties").DeleteOne(context.Background(), bson.M{"_id": id})
 	return err
+}
+
+// Get admin user with id
+func GetAdmin(id primitive.ObjectID) (map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Getting admin data
+	var admin map[string]interface{}
+	var err = db.Collection("admin").FindOne(context.Background(), bson.M{"_id": id}).Decode(&admin)
+	return admin, err
 }

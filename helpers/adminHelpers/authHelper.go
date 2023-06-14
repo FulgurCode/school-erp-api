@@ -41,7 +41,7 @@ func Logout(c *gin.Context) {
 // Update admin password
 func ChangePassword(admin map[string]interface{}) error {
 	// Hashed new password
-	var hashedPassword = helpers.HashPassword(admin["password"].(string))
+	var hashedPassword = helpers.HashPassword(admin["new-password"].(string))
 	// Updating password and returning error
 	var err = databaseHelpers.UpdateAdminPassword(admin["id"].(primitive.ObjectID), hashedPassword)
 	return err

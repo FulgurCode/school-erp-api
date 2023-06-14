@@ -63,8 +63,15 @@ func ChangeAdminPassword(c *gin.Context) {
 	}
 	// Getting request body
 	var data = helpers.GetRequestBody(c)
-	// Changing admin password and sending response
 	data["id"] = adminHelpers.GetId(c)
+	// Checking if old password is correct
+	var admin, _ = databaseHelpers.GetAdmin(data["id"].(primitive.ObjectID))
+	var result = helpers.ComparePassword(admin["password"].(string), data["old-password"].(string))
+	if !result {
+		c.JSON(401, "Old password is wrong")
+    return
+	}
+	// Changing admin password and sending response
 	var err = adminHelpers.ChangePassword(data)
 	if err != nil {
 		c.JSON(500, "Request failed")
@@ -475,11 +482,11 @@ func AdminCourseCasteReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in admin")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseCasteReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
