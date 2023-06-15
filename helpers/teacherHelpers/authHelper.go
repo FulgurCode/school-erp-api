@@ -90,3 +90,12 @@ func GetId(c *gin.Context) primitive.ObjectID {
 	var id, _ = primitive.ObjectIDFromHex(session.Get("id").(string))
 	return id
 }
+
+// Update teacher password
+func ChangePassword(teacher map[string]interface{}) error {
+	// Hashed new password
+	var hashedPassword = helpers.HashPassword(teacher["new-password"].(string))
+	// Updating password and returning error
+	var err = databaseHelpers.UpdateTeacherPassword(teacher["id"].(primitive.ObjectID), hashedPassword)
+	return err
+}

@@ -382,3 +382,29 @@ func TeacherCourseCasteReport(c *gin.Context) {
 	}
 	c.JSON(200, data)
 }
+
+// PUT request on '/api/teacher/change-password'
+func ChangeTeacherPassword(c *gin.Context) {
+	// Checking if logged in
+	if !teacherHelpers.CheckLogin(c) {
+		c.JSON(401, "Not Logged In as teacher")
+		return
+	}
+	// Getting request body
+	var data = helpers.GetRequestBody(c)
+	data["id"] = teacherHelpers.GetId(c)
+	// Checking if old password is correct
+	var teacher, _ = databaseHelpers.GetTeacher(data["id"].(primitive.ObjectID))
+	var result = helpers.ComparePassword(teacher["password"].(string), data["old-password"].(string))
+	if !result {
+		c.JSON(401, "Old password is wrong")
+    return
+	}
+	// Changing teacher password and sending response
+	var err = teacherHelpers.ChangePassword(data)
+	if err != nil {
+		c.JSON(500, "Request failed")
+		return
+	}
+	c.JSON(200, "Password Changed")
+}

@@ -67,3 +67,15 @@ func GetDuty(id primitive.ObjectID, dutyName string) (map[string]interface{}, er
 	var err = db.Collection("duties").FindOne(context.Background(), bson.M{"teacherId": id, "duty": dutyName}).Decode(&duty)
 	return duty, err
 }
+
+// Update teacher password
+func UpdateTeacherPassword(id primitive.ObjectID, password string) error {
+	// database
+	var db = connections.Db
+	// update password and return error
+	var _, err = db.Collection("teachers").UpdateOne(context.Background(), bson.M{"_id": id}, bson.M{"$set": bson.M{"password": password}})
+	if err != nil {
+		panic(err)
+	}
+	return err
+}
