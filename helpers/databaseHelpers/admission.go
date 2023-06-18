@@ -16,14 +16,17 @@ func GetLastAdmissionNumber() int32 {
 	// database
 	var db = connections.Db
 	// Getting student with highest admission number
-	var option = options.FindOne().SetSort(bson.M{"admissionNo": -1}).SetProjection(bson.M{"admissionNo": 1})
+	var option = options.Find().SetSort(bson.M{"admissionNo": -1})
 	var student map[string]interface{}
-	var err = db.Collection("students").FindOne(context.Background(), bson.M{}, option).Decode(&student)
+	var result, err = db.Collection("students").Find(context.Background(), bson.M{}, option)
+	for result.Next(context.Background()) {
+		result.Decode(&student)
+		break
+	}
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return 0
 		}
-		helpers.CheckNilErr(err)
 	}
 	var admissionNo, exists = student["admissionNo"].(int32)
 	if exists == false {

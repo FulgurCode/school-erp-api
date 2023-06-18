@@ -37,8 +37,9 @@ func ImportStudentsFromCSV(csvFile *multipart.FileHeader) []interface{} {
 				student[headers[i]] = number
 			}
 		}
-		// Adding pending status to student
+		// Adding custom detail to student
 		student["status"] = "pending"
+		student["import"] = true
 		// Appending student to students array
 		students = append(students, student)
 	}

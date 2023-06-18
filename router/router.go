@@ -16,7 +16,7 @@ func Router() *gin.Engine {
 	// cors setup
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins:  false,
-    AllowOrigins:     []string{"http://localhost:5173", "http://192.168.20.23:5173"},
+		AllowOrigins:     []string{"https://www.chattanchalhss.com", "https://chattanchalhss.com"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Authorization", "Origin", "Content-Length", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},

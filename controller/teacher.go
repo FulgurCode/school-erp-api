@@ -217,7 +217,7 @@ func TeacherGetStudentsRoute(c *gin.Context) {
 	var data = helpers.GetRequestBody(c)
 	var name = c.Query("name")
 	// Getting students and sending response
-	var students, err = studentHelpers.GetStudents(data,name)
+	var students, err = studentHelpers.GetStudents(data, name)
 	if err != nil {
 		c.JSON(500, "Request failed")
 		return
@@ -310,11 +310,11 @@ func TeacherCourseLanguageReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in teacher")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseLanguageReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -326,11 +326,11 @@ func TeacherCourseStatusReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in teacher")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseStatusReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -342,11 +342,11 @@ func TeacherCourseGenderReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in teacher")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseGenderReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -358,11 +358,11 @@ func TeacherCourseCategoryReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in teacher")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseCategoryReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -374,11 +374,11 @@ func TeacherCourseCasteReport(c *gin.Context) {
 		c.JSON(401, "Not Logged in teacher")
 		return
 	}
-  // Getting data from database and sending response
+	// Getting data from database and sending response
 	var data, err = databaseHelpers.CourseCasteReport()
 	if err != nil {
 		c.JSON(500, "Request failed")
-    return
+		return
 	}
 	c.JSON(200, data)
 }
@@ -398,7 +398,7 @@ func ChangeTeacherPassword(c *gin.Context) {
 	var result = helpers.ComparePassword(teacher["password"].(string), data["old-password"].(string))
 	if !result {
 		c.JSON(401, "Old password is wrong")
-    return
+		return
 	}
 	// Changing teacher password and sending response
 	var err = teacherHelpers.ChangePassword(data)
