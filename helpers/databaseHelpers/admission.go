@@ -5,6 +5,7 @@ import (
 
 	"github.com/FulgurCode/school-erp-api/connections"
 	"github.com/FulgurCode/school-erp-api/helpers"
+	"github.com/FulgurCode/school-erp-api/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -12,12 +13,12 @@ import (
 )
 
 // Getting admission number of last student
-func GetLastAdmissionNumber() int32 {
+func GetLastAdmissionNumber() int {
 	// database
 	var db = connections.Db
 	// Getting student with highest admission number
 	var option = options.Find().SetSort(bson.M{"admissionNo": -1})
-	var student map[string]interface{}
+	var student models.Student
 	var result, err = db.Collection("students").Find(context.Background(), bson.M{}, option)
 	for result.Next(context.Background()) {
 		result.Decode(&student)
@@ -28,15 +29,11 @@ func GetLastAdmissionNumber() int32 {
 			return 0
 		}
 	}
-	var admissionNo, exists = student["admissionNo"].(int32)
-	if exists == false {
-		admissionNo = 0
-	}
-	return admissionNo
+	return student.AdmissionNo
 }
 
 // Inserting student to database
-func InsertStudent(student map[string]interface{}) (string, error) {
+func InsertStudent(student models.Student) (string, error) {
 	// database
 	var db = connections.Db
 	// inserting students

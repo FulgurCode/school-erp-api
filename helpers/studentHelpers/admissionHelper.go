@@ -1,9 +1,10 @@
-package studentHelpers 
+package studentHelpers
 
 import (
 	"sync"
 
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
+	"github.com/FulgurCode/school-erp-api/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -11,14 +12,14 @@ import (
 var wg sync.WaitGroup
 
 // Get admission number and add new admission to database
-func AddNewAdmission(student map[string]interface{}) (string, error) {
+func AddNewAdmission(student models.Student) (string, error) {
 	// waiting for request to finish
 	wg.Wait()
 	wg.Add(1)
 	// getting last admission number
-	if _, exists := student["admissionNo"]; !exists && student["status"] == "permanent" {
+	if student.AdmissionNo == 0 && student.Status == "permanent" {
 		var admissionNo = databaseHelpers.GetLastAdmissionNumber()
-		student["admissionNo"] = admissionNo + 1
+		student.AdmissionNo = admissionNo + 1
 	}
 	// inserting student to database
 	var id, err = databaseHelpers.InsertStudent(student)

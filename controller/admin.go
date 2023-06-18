@@ -69,7 +69,7 @@ func ChangeAdminPassword(c *gin.Context) {
 	var result = helpers.ComparePassword(admin["password"].(string), data["old-password"].(string))
 	if !result {
 		c.JSON(401, "Old password is wrong")
-    return
+		return
 	}
 	// Changing admin password and sending response
 	var err = adminHelpers.ChangePassword(data)
@@ -88,7 +88,7 @@ func NewAdmissionRoute(c *gin.Context) {
 		return
 	}
 	// Getting request body
-	var data = helpers.GetRequestBody(c)
+	var data = helpers.GetStudentBody(c)
 	// Adding student to database and sending response
 	var id, err = studentHelpers.AddNewAdmission(data)
 	if err != nil {

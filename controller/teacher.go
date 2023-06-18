@@ -233,7 +233,7 @@ func TeacherNewAdmissionRoute(c *gin.Context) {
 		return
 	}
 	// Getting request body
-	var data = helpers.GetRequestBody(c)
+	var data = helpers.GetStudentBody(c)
 	// Adding student to database and sending response
 	var id, err = studentHelpers.AddNewAdmission(data)
 	if err != nil {

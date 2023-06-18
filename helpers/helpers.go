@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"github.com/FulgurCode/school-erp-api/models"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -23,4 +24,12 @@ func GetRequestBody(c *gin.Context) map[string]interface{} {
 // Genarate unique id
 func GenerateUniqueID() string {
 	return uuid.New().String()
+}
+
+// Getting student request body
+func GetStudentBody(c *gin.Context) models.Student {
+	var data models.Student
+	var err = c.BindJSON(&data)
+	CheckNilErr(err)
+	return data
 }
