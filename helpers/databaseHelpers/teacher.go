@@ -79,3 +79,19 @@ func UpdateTeacherPassword(id primitive.ObjectID, password string) error {
 	}
 	return err
 }
+
+// Get all teacher duties from database
+func GetTeacherDuties(id primitive.ObjectID) ([]map[string]interface{}, error) {
+	// database
+	var db = connections.Db
+	// Get teacher duty
+	var duties []map[string]interface{}
+	// get all duties of the teacher
+	var result, err = db.Collection("duties").Find(context.Background(), bson.M{"teacherId": id})
+	for result.Next(context.Background()) {
+		var duty map[string]interface{}
+		result.Decode(&duty)
+		duties = append(duties, duty)
+	}
+	return duties, err
+}
