@@ -28,7 +28,7 @@ type Student struct {
 	LinguisticMinority       string             `json:"linguisticMinority,omitempty" bson:"linguisticMinority,omitempty"`
 	SecondLanguage           string             `json:"secondLanguage,omitempty" bson:"secondLanguage,omitempty"`
 	Status                   string             `json:"status,omitempty" bson:"status,omitempty"`
-	TcNumber                 int                `json:"tcNumber,omitempty" bson:"tcNumber,omitempty"`
+	TcNumber                 string             `json:"tcNumber,omitempty" bson:"tcNumber,omitempty"`
 	TcDate                   string             `json:"tcDate,omitempty" bson:"tcDate,omitempty"`
 	TcSchool                 string             `json:"tcSchool,omitempty" bson:"tcSchool,omitempty"`
 	SslcNameOfBoard          string             `json:"sslcNameOfBoard,omitempty" bson:"sslcNameOfBoard,omitempty"`

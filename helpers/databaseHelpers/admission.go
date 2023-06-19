@@ -29,6 +29,9 @@ func GetLastAdmissionNumber() int {
 			return 0
 		}
 	}
+	if student.AdmissionNo == 0 {
+		return 0
+	}
 	return student.AdmissionNo
 }
 
