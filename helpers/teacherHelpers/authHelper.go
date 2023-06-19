@@ -1,6 +1,7 @@
 package teacherHelpers
 
 import (
+	"net/http"
 	"strconv"
 
 	"github.com/FulgurCode/school-erp-api/helpers"
@@ -13,6 +14,7 @@ import (
 
 // Storing teacher id in session
 func LoginWithSesssion(c *gin.Context, teacher map[string]interface{}) {
+	c.SetSameSite(http.SameSiteNoneMode)
 	var session = sessions.DefaultMany(c, "teacher")
 	session.Set("isLoggedIn", true)
 	session.Set("id", teacher["_id"].(primitive.ObjectID).Hex())
@@ -31,6 +33,7 @@ func UserExists(teacher map[string]interface{}) bool {
 
 // Set up signup otp
 func SignUpSetOTP(c *gin.Context, data map[string]interface{}) error {
+	c.SetSameSite(http.SameSiteNoneMode)
 	// Creating OTP and storing in session
 	var otp = helpers.CreateOTP()
 	var session = sessions.DefaultMany(c, "teacherSignupOTP")

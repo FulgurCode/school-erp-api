@@ -1,6 +1,8 @@
 package adminHelpers
 
 import (
+	"net/http"
+
 	"github.com/FulgurCode/school-erp-api/helpers"
 	"github.com/FulgurCode/school-erp-api/helpers/databaseHelpers"
 	"github.com/gin-contrib/sessions"
@@ -10,6 +12,7 @@ import (
 
 // Storing admin id in session
 func LoginWithSesssion(c *gin.Context, admin map[string]interface{}) {
+	c.SetSameSite(http.SameSiteNoneMode)
 	var session = sessions.DefaultMany(c, "admin")
 	session.Set("isLoggedIn", true)
 	session.Set("id", admin["_id"].(primitive.ObjectID).Hex())
