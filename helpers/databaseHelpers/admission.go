@@ -60,6 +60,11 @@ func UpdateStudent(admissionId primitive.ObjectID, student map[string]interface{
 	var db = connections.Db
 
 	// Updating student details based on student id
+	var s map[string]interface{}
+	db.Collection("students").FindOne(context.Background(), bson.M{"_id": admissionId}).Decode(&s)
+	if _, exist := s["admissionNo"]; exist {
+		delete(student, "admissionNo")
+	}
 	var _, err = db.Collection("students").UpdateOne(context.Background(), bson.M{"_id": admissionId}, bson.M{"$set": student})
 	helpers.CheckNilErr(err)
 	return err
