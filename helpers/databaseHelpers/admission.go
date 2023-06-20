@@ -55,7 +55,7 @@ func ImportStudents(students []interface{}) error {
 }
 
 // Update student details using object id
-func UpdateStudent(admissionId primitive.ObjectID, student map[string]interface{}) error {
+func UpdateStudent(admissionId primitive.ObjectID, student models.Student) error {
 	// database
 	var db = connections.Db
 

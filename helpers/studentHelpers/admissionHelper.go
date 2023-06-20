@@ -28,14 +28,14 @@ func AddNewAdmission(student models.Student) (string, error) {
 }
 
 // Set admission number if student don't have one and update student details
-func EditStudent(studentId primitive.ObjectID, student map[string]interface{}) error {
+func EditStudent(studentId primitive.ObjectID, student models.Student) error {
 	// waiting for request to finish
 	wg.Wait()
 	wg.Add(1)
 	// getting last admission number
-	if _, exists := student["admissionNo"]; !exists && student["status"] == "permanent" {
+	if student.AdmissionNo == 0 && student.Status == "permanent" {
 		var admissionNo = databaseHelpers.GetLastAdmissionNumber()
-		student["admissionNo"] = admissionNo + 1
+		student.AdmissionNo = admissionNo + 1
 	}
 	// Update student details
 	var err = databaseHelpers.UpdateStudent(studentId, student)

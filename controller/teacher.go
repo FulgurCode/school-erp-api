@@ -254,7 +254,7 @@ func TeacherEditStudent(c *gin.Context) {
 	var studentId, err = primitive.ObjectIDFromHex(c.Query("studentId"))
 	helpers.CheckNilErr(err)
 	// Getting request body
-	var data = helpers.GetRequestBody(c)
+	var data = helpers.GetStudentBody(c)
 	err = studentHelpers.EditStudent(studentId, data)
 	if err != nil {
 		c.JSON(500, "Request failed")
