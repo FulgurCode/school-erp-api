@@ -36,7 +36,7 @@ func GetLastAdmissionNumber() int {
 }
 
 // Inserting student to database
-func InsertStudent(student models.Student) (string, error) {
+func InsertStudent(student map[string]interface{}) (string, error) {
 	// database
 	var db = connections.Db
 	// inserting students
