@@ -33,8 +33,12 @@ func EditStudent(studentId primitive.ObjectID, student map[string]interface{}) e
 	wg.Add(1)
 	// getting last admission number
 	if _, exists := student["admissionNo"]; !exists && student["status"] == "permanent" {
-		var admissionNo = databaseHelpers.GetLastAdmissionNumber()
-		student["admissionNo"] = admissionNo + 1
+		var s map[string]interface{}
+		s, _ = databaseHelpers.GetStudent(studentId)
+		if _, exist := s["admissionNo"]; !exist {
+			var admissionNo = databaseHelpers.GetLastAdmissionNumber()
+			student["admissionNo"] = admissionNo + 1
+		}
 	}
 	// Update student details
 	var err = databaseHelpers.UpdateStudent(studentId, student)
